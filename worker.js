@@ -1,10 +1,12 @@
 onmessage = function (e) {
-	self.importScripts("Connect4.js", "assistant.js");
+	self.importScripts("Connect4.js", "assistant.js","p5.min.js",'p5.sound.min.js');
 	console.log(e.data);
 	board = e.data[0];
 	depth = e.data[1];
 	maximizingPlayer = e.data[2];
-	minimax(board, depth, -Infinity, Infinity, maximizingPlayer, true);
+	game = new Connect4;
+	game.board = copyArray(board)
+	minimax(game, depth, -Infinity, Infinity, maximizingPlayer, true);
 
 	function minimax(
 		board,
