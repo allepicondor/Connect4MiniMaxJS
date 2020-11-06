@@ -1,5 +1,3 @@
-var blackWorker = new Worker("worker.js");
-var redWorker = new Worker("worker.js");
 var yDivideOffset;
 var xOffset;
 var xDivideOffset;
@@ -116,16 +114,7 @@ function draw() {
 					//moves
 					choice = argmax(moves);
 				} else {
-					let start = performance.now();
-					moves = minimax(
-						game,
-						DepthOfAI,
-						-Infinity,
-						Infinity,
-						false,
-						true
-					);
-					console.log("minimax:" + (performance.now() - start));
+					moves = minimax(game,DepthOfAI,-Infinity,Infinity,false,true);
 					color = (0, 0, 0);
 					choice = argmin(moves);
 				}
