@@ -1,13 +1,9 @@
 function minimax(board, depth, alpha, beta, maximizingPlayer, first = false) {
-	function evaluate(board) {
+	function evaluate2(board) {
 		let red = 0;
 		let black = 0;
-		let REDwin = 10000;
-		let BLACKwin = -1000;
-		if (maximizingPlayer) {
-			REDwin = -1000;
-			BLACKwin = 10000;
-		}
+		let REDwin = 100;
+		let BLACKwin = -100;
 		for (let x = 0; x < 7; x++) {
 			for (let y = 0; y < 6; y++) {
 				if (board[x][y] != 0) {
@@ -119,14 +115,27 @@ function minimax(board, depth, alpha, beta, maximizingPlayer, first = false) {
 		}
 		return red - black;
 	}
+	function evaluate(board){
+		let predict = model.predict(tf.reshape(tf.tensor(game.board),[1,7,6,1])).dataSync()[0];
+		return map(predict,0,1,-10,10)
+	}
+	evaluate
 	let anyoneWin = board.CheckForConnect();
 	if (depth == 0 || anyoneWin == true || anyoneWin == false) {
-		if (anyoneWin == true || anyoneWin == false) {
-			if (maximizingPlayer) return -1000 * depth;
-			else return 1000 * depth;
+		if (anyoneWin == true) {
+			if (maximizingPlayer) return -evaluate(board.board) * depth;
+			else return evaluate(board.board) * depth;
+		}else if(anyoneWin == false){
+			if (maximizingPlayer) return -evaluate(board.board) * depth;
+			else return evaluate(board.board) * depth;
 		}
-		output = evaluate(board.board);
-		return output;
+		if (maximizingPlayer)
+			return evaluate(board.board);
+		else
+			return -evaluate(board.board);
+
+		
+
 	}
 	let moves = [];
 	if (maximizingPlayer) {

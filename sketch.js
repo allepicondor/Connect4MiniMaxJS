@@ -10,7 +10,9 @@ var DepthOfAI = 6;
 let game;
 let coloum;
 let ForwardButton;
-function setup() {
+var model;
+
+async function setup() {
 	createCanvas(800, 500);
 	game = new Connect4();
 	PieceSize = 60;
@@ -26,6 +28,8 @@ function setup() {
 	DepthSlider = createSlider(1, 15, 6);
 	RedAICheckBox = createCheckbox("RED AI", false);
 	BLACKAICheckBox = createCheckbox("BLACK AI", true);
+	const MODEL_URL = 'ModelJS/model.json';
+	model = await tf.loadGraphModel(MODEL_URL);
 }
 function MoveBack() {
 	console.log(Logs);
