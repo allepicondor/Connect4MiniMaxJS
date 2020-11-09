@@ -203,7 +203,6 @@ class Connect4 {
 			}
 		}
 		strokeWeight(5);
-		line(BorderX, 0, BorderX, height);
 		pop();
 	}
 }
